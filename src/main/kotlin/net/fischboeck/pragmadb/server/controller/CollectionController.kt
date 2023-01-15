@@ -25,14 +25,18 @@ class CreateCollectionController: BaseController(), HttpHandler {
 
     override fun handleRequest(exchange: HttpServerExchange) {
 
-        val command = readRequest(exchange, CreateCollectionRequest::class.java)
-        if (command.name.trim().isEmpty()) {
-            return sendErrorResponse(exchange, ErrorResponse(StatusCodes.BAD_REQUEST,"The collection name must not be empty"))
-        }
+        try {
+            val command = readRequest(exchange, CreateCollectionRequest::class.java)
+            if (command.name.trim().isEmpty()) {
+                return sendErrorResponse(exchange, ErrorResponse(StatusCodes.BAD_REQUEST, "The collection name must not be empty"))
+            }
 
-        val engine = StorageEngineRegistry.createCollection(command.name.trim())
-        val response = CreateCollectionResponse(name = engine.name)
-        sendResponse(exchange, response, StatusCodes.CREATED)
+            val engine = StorageEngineRegistry.createCollection(command.name.trim())
+            val response = CreateCollectionResponse(name = engine.name)
+            sendResponse(exchange, response, StatusCodes.CREATED)
+        } catch (ex: Exception) {
+            // noop. Error response already sent
+        }
     }
 }
 
