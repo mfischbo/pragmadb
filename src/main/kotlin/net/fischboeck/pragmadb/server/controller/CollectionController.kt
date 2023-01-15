@@ -36,6 +36,7 @@ class CreateCollectionController: BaseController(), HttpHandler {
             sendResponse(exchange, response, StatusCodes.CREATED)
         } catch (ex: Exception) {
             // noop. Error response already sent
+            ex.printStackTrace()
         }
     }
 }
