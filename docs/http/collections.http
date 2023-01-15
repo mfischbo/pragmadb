@@ -1,0 +1,14 @@
+
+# Get all collections
+GET http://localhost:8081/collections
+Content-Type: application/json
+
+###
+
+# Create a collection
+POST http://localhost:8081/collections
+Content-Type: application/json
+
+{
+    "name": "foobar"
+}
